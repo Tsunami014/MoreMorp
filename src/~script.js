@@ -1,11 +1,18 @@
 // From injct.js: `modifyJSON` & `hook`
 const origFetch = window.fetch;
-window.fetch = (...args) => {
-  let orig = origFetch(...args);
-  if (args[0].endsWith(".json")) {
-    orig = modifyJSON(args[0], orig)
+window.fetch = async function (...args) {
+  if (!args[0].endsWith(".json")) {
+    return origFetch(...args)
   }
-  return orig;
+  let orig = await origFetch(...args);
+  const data = await orig.clone().json();
+  modifyJSON(args[0], data)
+
+  return new Response(JSON.stringify(data), {
+    status: orig.status,
+    statusText: orig.statusText,
+    headers: new Headers(orig.headers),
+  });
 };
 
 // We don't need this for now, but it works

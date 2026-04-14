@@ -1,6 +1,6 @@
-function modifyJSON(url, req) {
-    console.log(url);
-    return req;
+function modifyJSON(url, js) {
+    //console.log(url, js);
+    js.npcs = []
 }
 
 function hook() {}
