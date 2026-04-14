@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "MoreMorp",
+  "version": "1.0",
+  "permissions": [],
+  "content_scripts": [
+    {
+      "matches": ["*://morp.hackclub.com/"],
+      "js": ["script.js"],
+      "run_at": "document_start"
+    }
+  ]
+}
