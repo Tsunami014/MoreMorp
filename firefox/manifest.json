@@ -2,12 +2,13 @@
   "manifest_version": 3,
   "name": "MoreMorp",
   "version": "1.0",
-  "permissions": [],
+  "host_permissions": ["*://morp.hackclub.com/*"],
   "content_scripts": [
     {
-      "matches": ["*://morp.hackclub.com/"],
+      "matches": ["*://morp.hackclub.com/*"],
       "js": ["script.js"],
-      "run_at": "document_start"
+      "run_at": "document_start",
+      "world": "MAIN"
     }
   ]
 }

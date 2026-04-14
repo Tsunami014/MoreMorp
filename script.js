@@ -1,16 +1,16 @@
-const s = document.createElement("script");
+const origFetch = window.fetch;
+window.fetch = (...args) => {
+  console.log("fetch:", args[0]);
+  return origFetch(...args);
+};
 
-// Otherwise it wouldn't load properly
-s.textContent = `
-  const originalFetch = window.fetch;
-  window.fetch = function (...args) {
-    console.log("Intercepted fetch:", args);
-    return originalFetch.apply(this, args);
-  };
+const imgDesc = Object.getOwnPropertyDescriptor(HTMLImageElement.prototype, "src");
+Object.defineProperty(HTMLImageElement.prototype, "src", {
+  get: imgDesc.get,
+  set(value) {
+    console.log("img:", value);
+    return imgDesc.set.call(this, value);
+  }
+});
 
-  console.log("MoreMorp successfully loaded!");
-`;
-
-// Inject immediately
-document.documentElement.appendChild(s);
-s.remove();
+console.log("MoreMorp loaded successfully!");
