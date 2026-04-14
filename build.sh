@@ -1,2 +1,3 @@
 #!/bin/sh
-cp script.js firefox/script.js
+OUT=$(cat src/*.js | minify --type js)
+echo $OUT > firefox/out.js

@@ -6,7 +6,7 @@
   "content_scripts": [
     {
       "matches": ["*://morp.hackclub.com/*"],
-      "js": ["script.js"],
+      "js": ["out.js"],
       "run_at": "document_start",
       "world": "MAIN"
     }
