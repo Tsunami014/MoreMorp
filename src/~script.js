@@ -15,17 +15,15 @@ window.fetch = async function (...args) {
   });
 };
 
-const imgDesc = Object.getOwnPropertyDescriptor(HTMLImageElement.prototype, "src")
+// This works if needed later
+/*const imgDesc = Object.getOwnPropertyDescriptor(HTMLImageElement.prototype, "src")
 Object.defineProperty(HTMLImageElement.prototype, "src", {
   get: imgDesc.get,
   set(value) {
     //console.log("img:", value)
-    if (value.includes("moremorp")) {
-      value = value.split("~")[1]
-    }
     return imgDesc.set.call(this, value)
   }
-})
+})*/
 
 hook()
 console.log("[MoreMorp] Loaded successfully!")

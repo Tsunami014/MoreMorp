@@ -26,12 +26,6 @@ function hook() {
                 if ("getInstance" in ob) {
                     proto = ob.prototype
 
-                    oldlt = proto.loadTexture
-                    proto.loadTexture = function(obj) {
-                        console.log(obj)
-                        return oldlt.call(this, obj);
-                    }
-
                     oldgsi = proto.getSpriteIds
                     proto.getSpriteIds = function () {
                         return oldgsi.call(this).concat(Object.keys(OBJS))
@@ -50,7 +44,7 @@ function hook() {
                         for (const [nam, conts] of Object.entries(OBJS)) {
                             const e = "9999999999999_"+nam
                             try {
-                                this.textures.set(e, await this.getOrLoadTexture(conts.path.split("~")[1]));
+                                this.textures.set(e, await this.getOrLoadTexture(conts.path));
                             } catch (t) {
                                 console.warn(`[MoreMorp] [deferred] Failed to load sprite "${e}":`, t),
                                 this.textures.set(e, this.createFallbackTexture("MM"+nam));
