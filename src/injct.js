@@ -9,8 +9,9 @@ function modifyJSON(url, js) {
             rotation: 0.4,
             scale: 1.2,
             type: portal,
-            x: -8,
-            z: -2,
+            // x and z are (very roughly) 0.3 per quick tap of the direction key, +z being down and +x being right
+            x: 0,
+            z: 2,
         })
     }
 }
