@@ -1,4 +1,3 @@
-const portal = "9999999999999_portall"
 function modifyJSON(url, js) {
     if (url.includes("town-square")) {
         js.objects.push({
@@ -27,13 +26,12 @@ function hook() {
 
                     oldgsi = proto.getSpriteIds
                     proto.getSpriteIds = function () {
-                        return oldgsi.call(this).concat(Object.keys(OBJS))
+                        return oldgsi.call(this).concat(Object.keys(MANIF.sprites))
                     }
                     oldgsd = proto.getSpriteDefinition
                     proto.getSpriteDefinition = function (obj) {
-                        if (obj.startsWith("999999999999")) {
-                            const objspec = obj.split("_")[1]
-                            return OBJS[objspec];
+                        if (obj in MANIF.sprites) {
+                            return MANIF.sprites[obj];
                         }
                         return oldgsd.call(this, obj);
                     }
@@ -51,13 +49,12 @@ function hook() {
                         } else {
                             this.levelDataCache.set("old-town-square", dat)
                         }
-                        for (const [nam, conts] of Object.entries(OBJS)) {
-                            const e = "9999999999999_"+nam
+                        for (const [nam, conts] of Object.entries(MANIF.sprites)) {
                             try {
-                                this.textures.set(e, await this.getOrLoadTexture(conts.path));
+                                this.textures.set(nam, await this.getOrLoadTexture(conts.path));
                             } catch (t) {
-                                console.warn(`[MoreMorp] [deferred] Failed to load sprite "${e}":`, t),
-                                this.textures.set(e, this.createFallbackTexture("MM"+nam));
+                                console.warn(`[MoreMorp] [deferred] Failed to load sprite "${nam}":`, t),
+                                this.textures.set(nam, this.createFallbackTexture("MM"+nam));
                             }
                         }
                     }

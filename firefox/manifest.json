@@ -17,7 +17,7 @@
   ],
   "web_accessible_resources": [
     {
-      "resources": ["images/*", "levels*"],
+      "resources": ["images/*", "levels*", "manif.json"],
       "matches": ["*://morp.hackclub.com/*"]
     }
   ]

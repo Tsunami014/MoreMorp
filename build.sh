@@ -17,4 +17,5 @@ cat src/replace.js <(
 echo "$OUT" > dist/firefox/out.js
 cp -r src/images dist/firefox/images
 cp -r src/levels dist/firefox/levels
+cp src/manif.json dist/firefox/manif.json
 echo "Built firefox extension at dist/firefox"

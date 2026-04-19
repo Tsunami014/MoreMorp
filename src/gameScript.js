@@ -21,8 +21,28 @@ export function getCurrentLvl() {
   }
   return [ld.get(current), current == "old-town-square"];
 }
+
+async function clearLevel() {
+  main.npcs.forEach((e) => {
+    main.scene.remove(e.mesh), main.disposeObject(e.mesh);
+  })
+  main.npcs.clear()
+  main.interactableSprites.clear()
+  main.nearbySprite = null
+  main.onNearbySpriteChange?.(null)
+  main.activeZoneIds.clear()
+}
+async function afterLoadLevel() {
+}
+async function loadLevel(lvlId, spawn) {
+  await clearLevel()
+  await main.loadLevel(lvlId, spawn)
+  main.inputEnabled = true
+  main.onAfterLevelTransition()
+}
 export function teleport(to, spawn) {
   if (!check()) return;
+  console.log("Teleporting to", to, spawn)
   if (to == "town-square") { to = "old-town-square"; }
   var ld = main.assetManager.levelDataCache;
   ld.set("town-square", ld.get(to))
@@ -39,7 +59,7 @@ export function teleport(to, spawn) {
   c.play(
     r, i,
     async () => {
-        l?.(!0), await main.loadLevel(lvlId, spawn), main.inputEnabled = true;
+        l?.(!0), await loadLevel(lvlId, spawn);
     },
     () => {
         l?.(!1);
