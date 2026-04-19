@@ -3,9 +3,11 @@ const portal = "9999999999999_portall"
 function modifyJSON(url, js) {
     //console.log(url, js);
     if (url.includes("town-square")) {
+        //console.log(js)
         js.objects.push({
             id: portal,
-            // action?
+            // Existing action to look at: open_battle_dome
+            action: { label: "Travel", type: "mm_travel" },
             rotation: 0.4,
             scale: 1.2,
             type: portal,
@@ -19,6 +21,7 @@ function modifyJSON(url, js) {
 inst = null
 function hook() {
     document.addEventListener("DOMContentLoaded", () => {
+        // Do stuff with the index file
         idx = document.head.innerHTML.indexOf("index")
         file = document.head.innerHTML.slice(idx,document.head.innerHTML.indexOf(".", idx)) + ".js"
         import('/assets/'+file).then(module => {
