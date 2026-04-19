@@ -61,5 +61,12 @@ function hook() {
             }
             console.error("[MoreMorp] Unable to find an instanceable object in the module!")
         });
+
+        // Do stuff with the GameCanvas file (now that it's been modified)
+        idx = document.head.innerHTML.indexOf("GameCanvas")
+        file = document.head.innerHTML.slice(idx,document.head.innerHTML.indexOf(".", idx)) + ".js"
+        import('/assets/'+file).then(module => {
+            console.log(module)
+        })
     })
 }

@@ -25,7 +25,6 @@ Object.defineProperty(HTMLImageElement.prototype, "src", {
   }
 })*/
 
-// Don't override logs, override gamecanvas class prototype
 const origLog = console.log;
 console.log = (...args)=>{
   if (typeof args[0] === "string" && args[0].includes("Entering exit zone")) {

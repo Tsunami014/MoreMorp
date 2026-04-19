@@ -2,10 +2,10 @@
   "manifest_version": 3,
   "name": "MoreMorp",
   "version": "1.0",
-  "permissions": ["webRequest", "webRequestBlocking"],
+  "permissions": ["webRequest", "webRequestBlocking", "webRequestFilterResponse"],
   "host_permissions": ["*://morp.hackclub.com/*"],
   "background": {
-    "scripts": ["redirectImg.js"]
+    "scripts": ["redirect.js"]
   },
   "content_scripts": [
     {
@@ -18,7 +18,7 @@
   "web_accessible_resources": [
     {
       "resources": ["assets/*"],
-      "matches": ["<all_urls>"]
+      "matches": ["*://morp.hackclub.com/*"]
     }
   ]
 }
