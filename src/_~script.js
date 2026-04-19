@@ -26,13 +26,5 @@ Object.defineProperty(HTMLImageElement.prototype, "src", {
   }
 })*/
 
-const origLog = console.log;
-console.log = (...args)=>{
-  if (typeof args[0] === "string" && args[0].includes("Entering exit zone")) {
-    origLog("Entered an exit zone!")
-  }
-  origLog(...args)
-}
-
 hook()
 console.log("[MoreMorp] Loaded successfully!")

@@ -1,17 +1,13 @@
 const portal = "9999999999999_portall"
 /// This function only adds the portal in the intro. All moremorp levels are handled elsewhere
 function modifyJSON(url, js) {
-    //console.log(url, js);
     if (url.includes("town-square")) {
-        //console.log(js)
         js.objects.push({
             id: portal,
-            // Existing action to look at: open_battle_dome
             action: { label: "Travel", type: "mm_enter" },
             rotation: 0.4,
             scale: 1.2,
             type: portal,
-            // x and z are (very roughly) 0.3 per quick tap of the direction key, +z being down and +x being right
             x: 0,
             z: 2,
         })
@@ -48,6 +44,7 @@ function hook() {
                         LEVELS.forEach(lvl=>{
                             this.ensureLevelData("mm_"+lvl)
                         })
+                        this.levelDataCache.set("old-intro-scene", this.levelDataCache.get("intro-scene"))
                         for (const [nam, conts] of Object.entries(OBJS)) {
                             const e = "9999999999999_"+nam
                             try {

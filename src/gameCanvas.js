@@ -12,9 +12,29 @@ function check() {
   }
   return true;
 }
-export function teleport(to) {
+export function teleport(to, spawn) {
   if (!check()) return;
-  main.loadLevel(to)
+  if (to == "town-square") { to = "old-town-square"; }
+  var ld = main.assetManager.levelDataCache;
+  ld.set("town-square", ld.get(to))
+  const lvlId = "town-square"
+  let player = main.players.get(main.localPlayerId);
+
+  let n = player.mesh.position.clone().project(main.camera),
+    r = (n.x + 1) / 2,
+    i = (-n.y + 1) / 2;
+  main.setInputEnabled(!1);
+  let c = main.sceneTransition,
+    l = main.onTransitionStateChange;
+  c.play(
+    r, i,
+    async () => {
+        l?.(!0), await main.loadLevel(lvlId, spawn), main.inputEnabled = true;
+    },
+    () => {
+        l?.(!1);
+    }
+  )
 }
 `;
 function patchData(data) {
