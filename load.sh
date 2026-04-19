@@ -1,10 +1,8 @@
 rm -rf extract
 unzip $1 -d extract &>/dev/null
 
-#cp extract/shared/src
 rm -rf src/levels
-cp -r extract/shared/src/levels/ src
-
+mv extract/shared/src/levels/ src
 {
   echo "// Auto-generated"
   echo "const LEVELS = ["
@@ -14,3 +12,15 @@ cp -r extract/shared/src/levels/ src
   done
   echo "]"
 } > src/_*levels.js
+
+while read -r f; do
+  mv "$f" src/images/"$(basename "$f")"
+done < <(find extract/client -name "*.webp")
+{
+  echo "// Auto-generated"
+  echo "const IMGS = ["
+  for f in src/images/*; do
+    printf '  "%s",\n' "$(basename "$f")"
+  done
+  echo "]"
+} > src/images.js

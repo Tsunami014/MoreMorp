@@ -20,16 +20,15 @@ browser.webRequest.onBeforeRequest.addListener(
       };
     }
 
-    if (url.pathname.startsWith("/moremorp/assets/")) {
-      const file = url.pathname.replace("/moremorp/assets/", "assets/");
-      const redirectUrl = browser.runtime.getURL(file);
-
-      return { redirectUrl };
+    for (const pth of IMGS) {
+      if (url.pathname.endsWith(pth)) {
+        const redirectUrl = browser.runtime.getURL("images/"+pth);
+        return { redirectUrl };
+      }
     }
-    if (url.pathname.startsWith("/assets/levels/mm_")) {
+    if (url.pathname.startsWith("/assets/levels/mm_") && url.pathname.endsWith(".json")) {
       const file = url.pathname.replace("/assets/levels/mm_", "levels/");
       const redirectUrl = browser.runtime.getURL(file);
-
       return { redirectUrl };
     }
   },
