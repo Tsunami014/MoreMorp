@@ -1,5 +1,4 @@
 const portal = "9999999999999_portall"
-/// This function only adds the portal in the intro. All moremorp levels are handled elsewhere
 function modifyJSON(url, js) {
     if (url.includes("town-square")) {
         js.objects.push({
@@ -40,11 +39,18 @@ function hook() {
                     }
                     oldload = proto._loadEssential
                     proto._loadEssential = async function (...args) {
-                        await oldload.call(this, args)
+                        await oldload.call(this, ...args)
                         LEVELS.forEach(lvl=>{
                             this.ensureLevelData(lvl)
                         })
-                        this.levelDataCache.set("old-intro-scene", this.levelDataCache.get("intro-scene"))
+                        const dat = this.getLevelData("town-square")
+                        if (dat === null) {
+                            this.levelDataPromises.get("town-square").then(obj=>{
+                                this.levelDataCache.set("old-town-square", obj)
+                            })
+                        } else {
+                            this.levelDataCache.set("old-town-square", dat)
+                        }
                         for (const [nam, conts] of Object.entries(OBJS)) {
                             const e = "9999999999999_"+nam
                             try {

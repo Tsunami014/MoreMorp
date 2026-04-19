@@ -20,15 +20,18 @@ done < <(find extract/client -name "*.webp")
 {
   echo "// Auto-generated"
   echo "const PATCH = {"
-  echo "  IMGS: {"
-  echo "  prefix: 'images/', data: ["
-  for f in src/images/*; do
-    printf '    "%s",\n' "$(basename "$f")"
-  done
-  echo "  ]}, LEVELS: {"
-  echo "  prefix: 'levels/', data: ["
-  for f in src/levels/*; do
-    printf '    "%s",\n' "$(basename "$f")"
-  done
-  echo "]}}"
+  gen() {
+    echo "  $1: {"
+    printf '  prefix: "%s", data: [\n' "$3/"
+    for f in "$2"/*; do
+      printf '    "%s",\n' "$(basename "$f")"
+    done
+    if [[ -v 4 ]]; then
+      echo "]}}"
+    else
+      echo "  ]},"
+    fi
+  }
+  gen IMGS src/images images
+  gen LEVELS src/levels levels end
 } > src/replace.js

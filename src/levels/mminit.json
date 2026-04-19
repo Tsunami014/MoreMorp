@@ -28,41 +28,40 @@
   "levelType": "outdoor",
   "cameraZoom": 1,
   "spawn": {
-    "x": -1,
-    "z": 1
+    "x": 5,
+    "z": -1
   },
   "spawns": [
     {
       "id": "1776290095610_gxzpr9s",
       "tag": "default",
-      "x": -1,
-      "z": 1,
+      "x": 5,
+      "z": -1,
       "isPrimary": true
     }
   ],
-  "objects": [],
+  "objects": [
+    {
+      "id": "1776593516375_wmixv7m",
+      "type": "1776290355638_fi6ccd6",
+      "x": -2,
+      "z": -1,
+      "rotation": 0,
+      "scale": 1.0030078688172412
+    }
+  ],
   "colliders": [],
   "npcs": [
     {
       "id": "1776290360958_eaq7e6p",
       "name": "New NPC",
       "sprite": "1776290303849_jenhhso",
-      "x": -3,
-      "z": -2,
+      "x": 5,
+      "z": -5,
       "rotation": -0.2617993877991494,
       "scale": 1,
       "dialogue": [
         "Hello!"
-      ],
-      "restartNodeId": "1776291288074_huvbxv9",
-      "conditionalStarts": [
-        {
-          "condition": {
-            "questId": "1776290178185_lbayrqa"
-          },
-          "startNodeId": "1776290971355_2xmns94",
-          "priority": 1
-        }
       ],
       "battleDeck": [
         "warrior"
@@ -70,45 +69,7 @@
       "dialogueTree": [
         {
           "id": "1776291007611_gmmg0v7",
-          "text": "It seems you have not started the quest yet.",
-          "nextNodeId": "1776291266845_udbihuf"
-        },
-        {
-          "id": "1776290971355_2xmns94",
-          "text": "You've started the quest!",
-          "nextNodeId": "1776291288074_huvbxv9"
-        },
-        {
-          "id": "1776291266845_udbihuf",
-          "text": "",
-          "nodeType": "player",
-          "choices": [
-            {
-              "label": "I'll do it later",
-              "nextNodeId": ""
-            },
-            {
-              "label": "Please start it!",
-              "nextNodeId": "1776291498948_tvpazfu"
-            }
-          ]
-        },
-        {
-          "id": "1776291288074_huvbxv9",
-          "text": "Enjoy it!"
-        },
-        {
-          "id": "1776291498948_tvpazfu",
-          "text": "All right, done!",
-          "autoActions": [
-            {
-              "type": "start_quest",
-              "label": "Start quest",
-              "params": {
-                "questId": "1776290178185_lbayrqa"
-              }
-            }
-          ]
+          "text": "Have a nice day!"
         }
       ]
     }
