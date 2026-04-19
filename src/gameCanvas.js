@@ -43,7 +43,7 @@ function patchData(data) {
         .replace(/(?=open_devlog_terminal:)/, `
 mm_enter: () => {
   console.log("Travelling");
-  teleport("mm_test");
+  teleport("mm_0");
 },
 `)
 ;

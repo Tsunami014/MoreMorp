@@ -1,7 +1,3 @@
-const LEVELS = [
-    "test"
-]
-
 const OBJS = {
     portall: {
         anchor: { x: 0.5, y: 0 },
