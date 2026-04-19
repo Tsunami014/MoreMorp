@@ -7,7 +7,7 @@ function modifyJSON(url, js) {
         js.objects.push({
             id: portal,
             // Existing action to look at: open_battle_dome
-            action: { label: "Travel", type: "mm_travel" },
+            action: { label: "Travel", type: "mm_enter" },
             rotation: 0.4,
             scale: 1.2,
             type: portal,
@@ -45,6 +45,9 @@ function hook() {
                     oldload = proto._loadEssential
                     proto._loadEssential = async function (...args) {
                         await oldload.call(this, args)
+                        LEVELS.forEach(lvl=>{
+                            this.ensureLevelData("mm_"+lvl)
+                        })
                         for (const [nam, conts] of Object.entries(OBJS)) {
                             const e = "9999999999999_"+nam
                             try {
@@ -61,12 +64,5 @@ function hook() {
             }
             console.error("[MoreMorp] Unable to find an instanceable object in the module!")
         });
-
-        // Do stuff with the GameCanvas file (now that it's been modified)
-        idx = document.head.innerHTML.indexOf("GameCanvas")
-        file = document.head.innerHTML.slice(idx,document.head.innerHTML.indexOf(".", idx)) + ".js"
-        import('/assets/'+file).then(module => {
-            console.log(module)
-        })
     })
 }

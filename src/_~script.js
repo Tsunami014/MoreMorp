@@ -4,6 +4,7 @@ window.fetch = async function (...args) {
   if (!args[0].endsWith(".json")) {
     return origFetch(...args)
   }
+  console.log("Fetching", args[0])
   let orig = await origFetch(...args);
   const data = await orig.clone().json();
   modifyJSON(args[0], data)

@@ -1,5 +1,6 @@
 browser.webRequest.onBeforeRequest.addListener(
   (details) => {
+    console.log("Fetching", details.url);
     const url = new URL(details.url);
 
     //console.log(url)
@@ -25,7 +26,13 @@ browser.webRequest.onBeforeRequest.addListener(
 
       return { redirectUrl };
     }
+    if (url.pathname.startsWith("/assets/levels/mm_")) {
+      const file = url.pathname.replace("/assets/levels/mm_", "levels/");
+      const redirectUrl = browser.runtime.getURL(file);
+
+      return { redirectUrl };
+    }
   },
-  { urls: ["*://morp.hackclub.com/*"], types: ["image", "script"] },
+  { urls: ["*://morp.hackclub.com/*"], types: ["image", "script", "xmlhttprequest", "other"] },
   ["blocking"]
 );
