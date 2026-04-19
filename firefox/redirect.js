@@ -3,7 +3,6 @@ browser.webRequest.onBeforeRequest.addListener(
     console.log("Fetching", details.url);
     const url = new URL(details.url);
 
-    //console.log(url)
     if (url.pathname.includes("GameCanvas")) {
       const filter = browser.webRequest.filterResponseData(details.requestId);
       const decoder = new TextDecoder();
@@ -14,22 +13,19 @@ browser.webRequest.onBeforeRequest.addListener(
         data += decoder.decode(event.data, { stream: true });
       };
       filter.onstop = () => {
-        const patched = patchData(data); // Included  gameCanvas.js
+        const patched = patchData(data); // Included in gameCanvas.js
         filter.write(encoder.encode(patched));
         filter.close();
       };
     }
 
-    for (const pth of IMGS) {
-      if (url.pathname.endsWith(pth)) {
-        const redirectUrl = browser.runtime.getURL("images/"+pth);
-        return { redirectUrl };
+    for (const name of Object.keys(PATCH)) {
+      for (const pth of PATCH[name].data) {
+        if (url.pathname.endsWith(pth)) {
+          const redirectUrl = browser.runtime.getURL(PATCH[name].prefix+pth);
+          return { redirectUrl };
+        }
       }
-    }
-    if (url.pathname.startsWith("/assets/levels/mm_") && url.pathname.endsWith(".json")) {
-      const file = url.pathname.replace("/assets/levels/mm_", "levels/");
-      const redirectUrl = browser.runtime.getURL(file);
-      return { redirectUrl };
     }
   },
   { urls: ["*://morp.hackclub.com/*"], types: ["image", "script", "xmlhttprequest", "other"] },

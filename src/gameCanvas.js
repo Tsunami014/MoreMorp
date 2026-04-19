@@ -41,10 +41,7 @@ function patchData(data) {
     return dataPref+data
         .replace(/(?<=this\.networkClient ?= ?)/, "setMain(this)||")
         .replace(/(?=open_devlog_terminal:)/, `
-mm_enter: () => {
-  console.log("Travelling");
-  teleport("mm_0");
-},
+mm_enter: () => { teleport("mminit"); },
 `)
 ;
 }

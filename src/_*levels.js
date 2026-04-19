@@ -1,4 +1,4 @@
 // Auto-generated
 const LEVELS = [
-  "0",
+  "mminit",
 ]

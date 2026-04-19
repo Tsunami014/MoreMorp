@@ -42,7 +42,7 @@ function hook() {
                     proto._loadEssential = async function (...args) {
                         await oldload.call(this, args)
                         LEVELS.forEach(lvl=>{
-                            this.ensureLevelData("mm_"+lvl)
+                            this.ensureLevelData(lvl)
                         })
                         this.levelDataCache.set("old-intro-scene", this.levelDataCache.get("intro-scene"))
                         for (const [nam, conts] of Object.entries(OBJS)) {
