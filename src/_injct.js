@@ -38,9 +38,6 @@ function hook() {
                     oldload = proto._loadEssential
                     proto._loadEssential = async function (...args) {
                         await oldload.call(this, ...args)
-                        LEVELS.forEach(lvl=>{
-                            this.ensureLevelData(lvl)
-                        })
                         const dat = this.getLevelData("town-square")
                         if (dat === null) {
                             this.levelDataPromises.get("town-square").then(obj=>{

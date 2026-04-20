@@ -33,16 +33,23 @@ async function clearLevel() {
   main.activeZoneIds.clear()
 }
 async function afterLoadLevel() {
+  // WIP
+  /*const curLvl = main.levelLoader.currentLevel
+  curLvl.npcs.forEach(npc=>{
+    main.npcs.set(npc.id, {...npc, mesh: main.createNPCSprite(npc.sprite)})
+  })*/
 }
 async function loadLevel(lvlId, spawn) {
   await clearLevel()
   await main.loadLevel(lvlId, spawn)
   main.inputEnabled = true
+  await afterLoadLevel()
   main.onAfterLevelTransition()
 }
-export function teleport(to, spawn) {
+export async function teleport(to, spawn) {
   if (!check()) return;
-  console.log("Teleporting to", to, spawn)
+  await main.assetManager.ensureEssential(to)
+  console.log("[MoreMorp] Teleporting to", to, spawn)
   if (to == "town-square") { to = "old-town-square"; }
   var ld = main.assetManager.levelDataCache;
   ld.set("town-square", ld.get(to))

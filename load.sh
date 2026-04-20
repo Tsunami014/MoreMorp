@@ -4,15 +4,6 @@ unzip $1 -d extract &>/dev/null
 mv extract/shared/src/assets/manifest.json src/manif.json
 rm -rf src/levels
 mv extract/shared/src/levels/ src
-{
-  echo "// Auto-generated"
-  echo "const LEVELS = ["
-  for f in src/levels/*; do
-    nam=$(basename "$f")
-    printf '  "%s",\n' "${nam%.*}"
-  done
-  echo "]"
-} > src/_*levels.js
 
 while read -r f; do
   mv "$f" src/images/"$(basename "$f")"
