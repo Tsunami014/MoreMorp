@@ -10,7 +10,7 @@ cp firefox/manifest.json dist/firefox
 cat src/replace.js <(
         {
             echo 'const dataPref = `'
-            minify --type js < src/gameScript.js
+            cat src/gameUI.js src/gameScript.js | minify --type js
             echo '`;'
         }
     ) src/gameCanvas.js firefox/redirect.js | minify --type js > dist/firefox/redirect.js

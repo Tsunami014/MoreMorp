@@ -1,8 +1,10 @@
 function patchData(data) {
-    return dataPref+data
+    const pref = "const LABLS = {" + data.match(/[^{]+textBox:[^}]+/g).join(",") + "};"
+    return pref+dataPref+data
+        .replace(/(getNearbySprite.+?\()(.+?)(?=\.action\.type\))/, "$1checkApply($2)||$2")
         .replace(/(?<=this\.networkClient ?= ?)/, "setMain(this)||")
         .replace(/(?=open_devlog_terminal:)/, `
-mm_enter: () => { teleport("mminit", "default"); },
+everythings_fine: () => {},
 `)
 ;
 }

@@ -1,4 +1,5 @@
 function modifyJSON(url, js) {
+    //console.log(js)
     if (url.includes("town-square")) {
         js.objects.push({
             id: portal,
@@ -9,6 +10,15 @@ function modifyJSON(url, js) {
             x: 0,
             z: 2,
         })
+    }
+    if (js.npcs && js.npcs.length > 0 && 'id' in js.npcs[0]) {
+        js.npcs.map(npc=>{
+            js.objects.push({
+                ...npc, type: npc.sprite,
+                action: { label: "talk to "+npc.name, type: "mm_npc" },
+            })
+        })
+        js.npcs = []
     }
 }
 

@@ -1,3 +1,4 @@
+console.log(LABLS)
 var main = null;
 function setMain(nmain) {
   main = nmain;
@@ -32,18 +33,10 @@ async function clearLevel() {
   main.onNearbySpriteChange?.(null)
   main.activeZoneIds.clear()
 }
-async function afterLoadLevel() {
-  // WIP
-  /*const curLvl = main.levelLoader.currentLevel
-  curLvl.npcs.forEach(npc=>{
-    main.npcs.set(npc.id, {...npc, mesh: main.createNPCSprite(npc.sprite)})
-  })*/
-}
 async function loadLevel(lvlId, spawn) {
   await clearLevel()
   await main.loadLevel(lvlId, spawn)
   main.inputEnabled = true
-  await afterLoadLevel()
   main.onAfterLevelTransition()
 }
 export async function teleport(to, spawn) {
@@ -72,4 +65,18 @@ export async function teleport(to, spawn) {
         l?.(!1);
     }
   )
+}
+
+
+function checkApply(obj) {
+  if (obj.action.type.startsWith("mm_")) {
+    let spl = obj.action.type.split("_").slice(1)
+    if (spl[0] == "enter") {
+      testUI()
+      //teleport("mminit", "default")
+    } else {
+      console.warn("[MoreMorp] Unknown object action: "+spl[0])
+    }
+    return "everythings_fine"
+  }
 }
