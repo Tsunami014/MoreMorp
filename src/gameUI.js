@@ -1,4 +1,4 @@
-console.log(LABLS)
+//console.log(LABLS)
 const DIALOGS = {
     Poobert: { name: "Poobert", img: "/assets/sprites/npcs/poobert/idle.webp" }
 }

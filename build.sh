@@ -16,6 +16,7 @@ cat src/replace.js <(
     ) src/gameCanvas.js firefox/redirect.js | minify --type js > dist/firefox/redirect.js
 echo "$OUT" > dist/firefox/out.js
 cp -r src/images dist/firefox/images
+cp src/portal.webp dist/firefox/images/portal.webp
 cp -r src/levels dist/firefox/levels
 cp src/manif.json dist/firefox/manif.json
 echo "Built firefox extension at dist/firefox"

@@ -5,6 +5,7 @@ mv extract/shared/src/assets/manifest.json src/manif.json
 rm -rf src/levels
 mv extract/shared/src/levels/ src
 
+rm -rf src/images/*
 while read -r f; do
   mv "$f" src/images/"$(basename "$f")"
 done < <(find extract/client -name "*.webp")
@@ -26,4 +27,8 @@ done < <(find extract/client -name "*.webp")
   }
   gen IMGS src/images images
   gen LEVELS src/levels levels end
+
+  echo "PATCH.IMGS.data.push('portal.webp')"
 } > src/replace.js
+
+echo "Loaded in assets from requested file!"

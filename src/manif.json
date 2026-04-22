@@ -1,17 +1,7 @@
 {
   "sprites": {
-    "1776290355638_fi6ccd6": {
-      "path": "sprites/level/1776290355638_fi6ccd6.webp",
-      "width": 1.5563177953679275,
-      "height": 2.2,
-      "anchor": {
-        "x": 0.5,
-        "y": 0
-      },
-      "zOffset": 0.1
-    },
-    "1776290303849_jenhhso": {
-      "path": "sprites/level/1776290303849_jenhhso.webp",
+    "1776897005301_wm0xa7b": {
+      "path": "sprites/level/1776897005301_wm0xa7b.webp",
       "width": 1.4148343594253885,
       "height": 2,
       "anchor": {

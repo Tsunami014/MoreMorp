@@ -40,36 +40,41 @@
       "isPrimary": true
     }
   ],
-  "objects": [
-    {
-      "id": "1776593516375_wmixv7m",
-      "type": "1776290355638_fi6ccd6",
-      "x": -2,
-      "z": -1,
-      "rotation": 0,
-      "scale": 1.0030078688172412
-    }
-  ],
+  "objects": [],
   "colliders": [],
   "npcs": [
     {
-      "id": "1776290360958_eaq7e6p",
+      "id": "1776897032661_v2pic07",
       "name": "New NPC",
-      "sprite": "1776290303849_jenhhso",
-      "x": 5,
-      "z": -5,
-      "rotation": -0.2617993877991494,
+      "sprite": "1776897005301_wm0xa7b",
+      "x": 4.980934540912492,
+      "z": -5.110641886693175,
+      "rotation": 0,
       "scale": 1,
       "dialogue": [
         "Hello!"
       ],
-      "battleDeck": [
-        "warrior"
-      ],
       "dialogueTree": [
         {
-          "id": "1776291007611_gmmg0v7",
-          "text": "Have a nice day!"
+          "id": "1776897032661_tfrz57t",
+          "text": "Have a moryp day!",
+          "nodeType": "npc",
+          "nextNodeId": "1776897073005_ig6nucm"
+        },
+        {
+          "id": "1776897073005_ig6nucm",
+          "text": "",
+          "nodeType": "player",
+          "choices": [
+            {
+              "label": "I will!",
+              "nextNodeId": ""
+            },
+            {
+              "label": "Thank you!",
+              "nextNodeId": ""
+            }
+          ]
         }
       ]
     }
@@ -82,7 +87,7 @@
     "tiles": [
       [
         null,
-        "1776290303849_jenhhso"
+        "1776897005301_wm0xa7b"
       ]
     ],
     "groundTiles": [
