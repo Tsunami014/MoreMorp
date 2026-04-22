@@ -1,8 +1,17 @@
 {
   "sprites": {
-    "1776897005301_wm0xa7b": {
-      "path": "sprites/level/1776897005301_wm0xa7b.webp",
-      "width": 1.4148343594253885,
+    "1776899750607_1v2yasx": {
+      "path": "sprites/level/1776899750607_1v2yasx.webp",
+      "width": 1.052396878483835,
+      "height": 2,
+      "anchor": {
+        "x": 0.5,
+        "y": 0
+      }
+    },
+    "1776899750304_q4qsn5a": {
+      "path": "sprites/level/1776899750304_q4qsn5a.webp",
+      "width": 1.503001200480192,
       "height": 2,
       "anchor": {
         "x": 0.5,

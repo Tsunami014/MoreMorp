@@ -2,7 +2,9 @@
 const PATCH = {
   IMGS: {
   prefix: "images/", data: [
-    "1776897005301_wm0xa7b.webp",
+    "1776899749834_jppll7d.webp",
+    "1776899750304_q4qsn5a.webp",
+    "1776899750607_1v2yasx.webp",
   ]},
   LEVELS: {
   prefix: "levels/", data: [

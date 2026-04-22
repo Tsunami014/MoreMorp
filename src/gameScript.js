@@ -91,16 +91,24 @@ function nxtNpcDialog(npc, id) {
   if (id == "") return;
   for (const d of npc.dialogueTree) {
     if (d.id == id) {
-      if (d.nodeType == "npc") {
-          NpcDialog({ name: npc.name, img: npc.sprite+".webp" }, d.text, ()=>{
-            nxtNpcDialog(npc, d.nextNodeId)
+      const nt = d.nodeType || "npc";
+      if (nt == "npc") {
+        if (d.text.startsWith("~~ACTION")) {
+          // Split by newline
+          d.text.split(String.fromCharCode(10)).forEach(txt=>{
+            if (txt.startsWith("~")) checkApply({action: {type: txt.slice(1)}})
           })
-      } else if (d.nodeType == "player") {
+          return;
+        }
+        NpcDialog({ name: npc.name, img: npc.sprite+".webp" }, d.text, ()=>{
+          nxtNpcDialog(npc, d.nextNodeId)
+        })
+      } else if (nt == "player") {
         Choices(d.choices.map(c=>{ return c.label }), idx=>{
           nxtNpcDialog(npc, d.choices[idx].nextNodeId)
         })
       } else {
-        console.warn("[MoreMorp] Unknown npc action: "+d.nodeType)
+        console.warn("[MoreMorp] Unknown npc action: "+nt)
       }
       break;
     }
@@ -117,6 +125,8 @@ function checkApply(obj) {
     let spl = obj.action.type.split("_").slice(1)
     if (spl[0] == "enter") {
       teleport("mminit", "default")
+    } else if (spl[0] == "exit") {
+      teleport("town-square", "")
     } else if (spl[0] == "npc") {
       runNpc(obj.action.data)
     } else {

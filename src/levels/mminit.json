@@ -9,34 +9,38 @@
       "z": -9
     },
     {
-      "x": 10,
+      "x": 7,
       "z": -10
     },
     {
-      "x": 10,
-      "z": 10
+      "x": 8,
+      "z": -5
     },
     {
-      "x": -10,
-      "z": 10
+      "x": -4,
+      "z": 4
     },
     {
-      "x": -7,
-      "z": -3
+      "x": -9,
+      "z": 2
+    },
+    {
+      "x": -9,
+      "z": -4
     }
   ],
-  "levelType": "outdoor",
+  "levelType": "indoor",
   "cameraZoom": 1,
   "spawn": {
-    "x": 5,
-    "z": -1
+    "x": -7,
+    "z": 1
   },
   "spawns": [
     {
       "id": "1776290095610_gxzpr9s",
       "tag": "default",
-      "x": 5,
-      "z": -1,
+      "x": -7,
+      "z": 1,
       "isPrimary": true
     }
   ],
@@ -44,11 +48,11 @@
   "colliders": [],
   "npcs": [
     {
-      "id": "1776897032661_v2pic07",
-      "name": "New NPC",
-      "sprite": "1776897005301_wm0xa7b",
-      "x": 4.980934540912492,
-      "z": -5.110641886693175,
+      "id": "1776899957553_5fwz059",
+      "name": "~Travel",
+      "sprite": "1776899750607_1v2yasx",
+      "x": -7,
+      "z": 1,
       "rotation": 0,
       "scale": 1,
       "dialogue": [
@@ -56,22 +60,35 @@
       ],
       "dialogueTree": [
         {
-          "id": "1776897032661_tfrz57t",
-          "text": "Have a moryp day!",
-          "nodeType": "npc",
-          "nextNodeId": "1776897073005_ig6nucm"
+          "id": "1776899957553_vaca8gn",
+          "text": "~~ACTION\n~mm_exit"
+        }
+      ]
+    },
+    {
+      "id": "1776900297351_drtkcfh",
+      "name": "New NPC",
+      "sprite": "1776899750304_q4qsn5a",
+      "x": 2,
+      "z": -5,
+      "rotation": 0,
+      "scale": 1,
+      "dialogue": [
+        "Hello!"
+      ],
+      "dialogueTree": [
+        {
+          "id": "1776900297351_on6m50o",
+          "text": "I'm a mole!",
+          "nextNodeId": "1776900310379_1d5oiyl"
         },
         {
-          "id": "1776897073005_ig6nucm",
+          "id": "1776900310379_1d5oiyl",
           "text": "",
           "nodeType": "player",
           "choices": [
             {
-              "label": "I will!",
-              "nextNodeId": ""
-            },
-            {
-              "label": "Thank you!",
+              "label": "...ok?",
               "nextNodeId": ""
             }
           ]
@@ -81,18 +98,26 @@
   ],
   "exitZones": [],
   "terrain": {
-    "gridCols": 2,
-    "gridRows": 1,
+    "gridCols": 1,
+    "gridRows": 2,
     "cellSize": 20,
     "tiles": [
       [
-        null,
-        "1776897005301_wm0xa7b"
+        "1776899749834_jppll7d"
+      ],
+      [
+        null
       ]
     ],
     "groundTiles": [
       [
-        null,
+        {
+          "imageId": "1776899749834_jppll7d",
+          "offsetX": -4.2,
+          "offsetZ": 3.2
+        }
+      ],
+      [
         null
       ]
     ]
@@ -100,23 +125,34 @@
   "lights": [
     {
       "type": "ambient",
-      "color": "#ffffff",
+      "color": "#deddda",
       "intensity": 2.8
     },
     {
       "type": "sun",
-      "color": "#ffffff",
+      "color": "#b5835a",
       "intensity": 1
     },
     {
-      "id": "1776290268911_rcknz60",
+      "id": "1776899793395_rlxhwn0",
       "type": "point",
       "color": "#ffaa44",
       "intensity": 5,
-      "x": -0.208354221548959,
+      "x": -5,
       "y": 2,
-      "z": -1.1356411645279998,
-      "radius": 8,
+      "z": -2,
+      "radius": 5,
+      "softness": 0.5
+    },
+    {
+      "id": "1776899800339_vse180x",
+      "type": "point",
+      "color": "#ffaa44",
+      "intensity": 5,
+      "x": 4,
+      "y": 2,
+      "z": -5,
+      "radius": 4,
       "softness": 0.5
     }
   ]

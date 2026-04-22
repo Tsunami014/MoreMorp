@@ -13,9 +13,15 @@ function modifyJSON(url, js) {
     }
     if (js.npcs && js.npcs.length > 0 && 'id' in js.npcs[0]) {
         js.npcs.map(npc=>{
+            var labl;
+            if (npc.name.startsWith("~")) {
+                labl = npc.name.slice(1)
+            } else {
+                labl = "talk to "+npc.name
+            }
             js.objects.push({
                 ...npc, type: npc.sprite,
-                action: { label: "talk to "+npc.name, type: "mm_npc", data: npc },
+                action: { label: labl, type: "mm_npc", data: npc },
             })
         })
         js.npcs = []
