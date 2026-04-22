@@ -1,4 +1,3 @@
-console.log(LABLS)
 var main = null;
 function setMain(nmain) {
   main = nmain;
