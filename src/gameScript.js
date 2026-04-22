@@ -22,6 +22,13 @@ export function getCurrentLvl() {
   return [ld.get(current), current == "old-town-square"];
 }
 
+function networkMove() {
+  if (localStorage.getItem("lastLevelId") == "town-square" && !getCurrentLvl()[1]) {
+    return false
+  }
+  return true
+}
+
 async function clearLevel() {
   main.npcs.forEach((e) => {
     main.scene.remove(e.mesh), main.disposeObject(e.mesh);
@@ -35,6 +42,19 @@ async function clearLevel() {
 async function loadLevel(lvlId, spawn) {
   await clearLevel()
   await main.loadLevel(lvlId, spawn)
+
+  const lvl = getCurrentLvl()[0]
+  var goto = null
+  for (const spn in lvl.spawns) {
+    if (spn.tag == spawn) {
+      goto = spn
+    }
+  }
+  if (goto === null) {
+    goto = lvl.spawn
+  }
+  tele(goto)
+
   main.inputEnabled = true
   main.onAfterLevelTransition()
 }
@@ -71,13 +91,13 @@ function checkApply(obj) {
   if (obj.action.type.startsWith("mm_")) {
     let spl = obj.action.type.split("_").slice(1)
     if (spl[0] == "enter") {
-      Choices(["Travel!", "Stay"], idx=>{
+      teleport("mminit", "default")
+      /*Choices(["Travel!", "Stay"], idx=>{
         if (idx == 0) {
           NpcDialog(DIALOGS.Poobert, "Going to the other place!", ()=>{
-            teleport("mminit", "default")
           })
         }
-      })
+      })*/
     } else {
       console.warn("[MoreMorp] Unknown object action: "+spl[0])
     }
