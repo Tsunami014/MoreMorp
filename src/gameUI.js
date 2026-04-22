@@ -1,4 +1,4 @@
-//console.log(LABLS)
+console.log(LABLS)
 const DIALOGS = {
     Poobert: { name: "Poobert", img: "/assets/sprites/npcs/poobert/idle.webp" }
 }
@@ -29,6 +29,16 @@ function slowread(txt) {
     return out
 }
 
+function btn(num) {
+    function out(e) {
+        e.onclick = ()=>{
+            then(num)
+        }
+    }
+    return out
+}
+
+
 function el({ tag, cls, text, src, alt, fn } = {}, children = []) {
     const e = document.createElement(tag||"div");
     if (cls) e.className = cls;
@@ -40,16 +50,16 @@ function el({ tag, cls, text, src, alt, fn } = {}, children = []) {
     return e;
 }
 
-function buildUI(thn, childr) {
+function buildUI(thn, childr, xtracls = "") {
     if (document.getElementsByClassName("OVERLAY").length > 0) return;
     const parent = document.getElementById("root").firstElementChild;
     const container = document.createElement("div");
-    container.className = LABLS.overlay + " OVERLAY";
+    container.className = LABLS.overlay + " OVERLAY" + xtracls;
     main.inputEnabled = false
-    then = ()=>{
+    then = (out)=>{
         main.inputEnabled = true
         container.remove()
-        if (thn) thn()
+        if (thn) thn(out)
     }
 
     childr.forEach(child => container.appendChild(child));
@@ -79,4 +89,25 @@ function NpcDialog({name, img}, txt, thn) {
             ])
         ])
     ])
+}
+
+function Choices(choices, thn) {
+    buildUI(thn, [
+        el({ cls: LABLS.dialogueWrapper+" "+LABLS.playerSpeaking }, [
+            el({ cls: LABLS.container }, [
+                el({ cls: LABLS.nameTag, text: "Player" }),
+                el({ cls: LABLS.choicesContainer }, choices.map((choice, idx)=>{
+                    return el({ tag: "button", cls: LABLS.choiceButton, text: choice, fn: btn(idx) });
+                }))
+            ]),
+            el({ cls: LABLS.playerPortraitContainer }, [
+                el({
+                    tag: "img",
+                    cls: LABLS.portrait,
+                    src: "/assets/sprites/ui/player.webp",
+                    alt: "Player"
+                })
+            ])
+        ])
+    ], " "+LABLS.hasChoices)
 }

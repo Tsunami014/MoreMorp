@@ -71,7 +71,13 @@ function checkApply(obj) {
   if (obj.action.type.startsWith("mm_")) {
     let spl = obj.action.type.split("_").slice(1)
     if (spl[0] == "enter") {
-      NpcDialog(DIALOGS.Poobert, "Going to the other place!", ()=>{teleport("mminit", "default")})
+      Choices(["Travel!", "Stay"], idx=>{
+        if (idx == 0) {
+          NpcDialog(DIALOGS.Poobert, "Going to the other place!", ()=>{
+            teleport("mminit", "default")
+          })
+        }
+      })
     } else {
       console.warn("[MoreMorp] Unknown object action: "+spl[0])
     }
