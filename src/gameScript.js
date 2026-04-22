@@ -87,17 +87,38 @@ export async function teleport(to, spawn) {
 }
 
 
+function nxtNpcDialog(npc, id) {
+  if (id == "") return;
+  for (const d of npc.dialogueTree) {
+    if (d.id == id) {
+      if (d.nodeType == "npc") {
+          NpcDialog({ name: npc.name, img: npc.sprite+".webp" }, d.text, ()=>{
+            nxtNpcDialog(npc, d.nextNodeId)
+          })
+      } else if (d.nodeType == "player") {
+        Choices(d.choices.map(c=>{ return c.label }), idx=>{
+          nxtNpcDialog(npc, d.choices[idx].nextNodeId)
+        })
+      } else {
+        console.warn("[MoreMorp] Unknown npc action: "+d.nodeType)
+      }
+      break;
+    }
+  }
+}
+function runNpc(npc) {
+  if (!npc.dialogueTree || npc.dialogueTree.length == 0) return;
+  nxtNpcDialog(npc, npc.dialogueTree[0].id)
+}
+
+
 function checkApply(obj) {
   if (obj.action.type.startsWith("mm_")) {
     let spl = obj.action.type.split("_").slice(1)
     if (spl[0] == "enter") {
       teleport("mminit", "default")
-      /*Choices(["Travel!", "Stay"], idx=>{
-        if (idx == 0) {
-          NpcDialog(DIALOGS.Poobert, "Going to the other place!", ()=>{
-          })
-        }
-      })*/
+    } else if (spl[0] == "npc") {
+      runNpc(obj.action.data)
     } else {
       console.warn("[MoreMorp] Unknown object action: "+spl[0])
     }

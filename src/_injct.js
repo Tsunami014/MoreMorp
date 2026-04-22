@@ -15,7 +15,7 @@ function modifyJSON(url, js) {
         js.npcs.map(npc=>{
             js.objects.push({
                 ...npc, type: npc.sprite,
-                action: { label: "talk to "+npc.name, type: "mm_npc" },
+                action: { label: "talk to "+npc.name, type: "mm_npc", data: npc },
             })
         })
         js.npcs = []

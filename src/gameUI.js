@@ -13,8 +13,9 @@ function slowread(txt) {
             if (i > txt.length) clearInterval(id);
         }, 10);
 
+        var clickhandle
         function handler(event) {
-            if (event.code !== 'Space') { return; }
+            if (event !== "click" && event.code !== 'Space') { return; }
             if (i <= txt.length) {
                 i = txt.length+1;
                 e.innerText = txt;
@@ -23,8 +24,11 @@ function slowread(txt) {
             }
             then();
             document.removeEventListener("keydown", handler);
+            document.removeEventListener("click", clickhandle);
         }
+        var clickhandle = ()=>{handler("click")}
         document.addEventListener("keydown", handler);
+        document.addEventListener("click", clickhandle);
     }
     return out
 }
@@ -83,7 +87,7 @@ function NpcDialog({name, img}, txt, thn) {
                 el({ cls: LABLS.textBox }, [
                     el({ cls: LABLS.text, fn: slowread(txt) }),
                     el({ cls: LABLS.actions }, [
-                        el({ cls: LABLS.prompt, text: "Press Space to continue" })
+                        el({ cls: LABLS.prompt, text: "Press Space or click to continue" })
                     ])
                 ])
             ])
