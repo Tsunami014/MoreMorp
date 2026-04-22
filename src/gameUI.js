@@ -1,4 +1,8 @@
 //console.log(LABLS)
+const DIALOGS = {
+    Poobert: { name: "Poobert", img: "/assets/sprites/npcs/poobert/idle.webp" }
+}
+
 var then;
 
 function slowread(txt) {
@@ -53,7 +57,7 @@ function buildUI(thn, childr) {
     parent.insertBefore(container, parent.lastElementChild)
 }
 
-function NPCDialog(name, img, txt, thn) {
+function NpcDialog({name, img}, txt, thn) {
     buildUI(thn, [
         el({ cls: LABLS.dialogueWrapper }, [
             el({ cls: LABLS.portraitContainer }, [
@@ -75,8 +79,4 @@ function NPCDialog(name, img, txt, thn) {
             ])
         ])
     ])
-}
-
-function testUI(thn) {
-    NPCDialog("Poobert", "/assets/sprites/npcs/poobert/idle.webp", "Hello! How are you?", thn)
 }
