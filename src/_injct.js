@@ -55,7 +55,7 @@ function hook() {
                     var init = true
                     proto._loadEssential = async function (...args) {
                         await oldload.call(this, ...args)
-                        if (!this.levelDataPromises.get("old-town-square")) {
+                        if (!this.levelDataCache.get("old-town-square")) {
                             const dat = this.getLevelData("town-square")
                             if (dat === null) {
                                 const ts = this.levelDataPromises.get("town-square")

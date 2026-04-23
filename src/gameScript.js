@@ -75,7 +75,9 @@ async function loadLevel(lvlId, spawn) {
   }
   if (isTown) {
     // Move down to sync with server again
-    main.networkClient.sendMove(0, 0.5, 0, 0, 0, 0, 0, 0);
+    setTimeout(()=>{
+      main.networkClient.sendMove(0, 0.5, 0, 0, 0, 0, 0, 0);
+    }, 100) // So that you aren't travelling before the loading starts if you load too fast
   }
 
   main.onAfterLevelTransition()
