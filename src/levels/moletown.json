@@ -66,6 +66,9 @@
       "dialogue": [
         "Hello!"
       ],
+      "battleDeck": [
+        "warrior"
+      ],
       "dialogueTree": [
         {
           "id": "1776904842522_brdkryr",
@@ -83,6 +86,9 @@
       "scale": 1,
       "dialogue": [
         "Hello!"
+      ],
+      "battleDeck": [
+        "warrior"
       ],
       "dialogueTree": [
         {
