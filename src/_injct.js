@@ -52,22 +52,31 @@ function hook() {
                         return oldgsd.call(this, obj);
                     }
                     oldload = proto._loadEssential
+                    var init = true
                     proto._loadEssential = async function (...args) {
                         await oldload.call(this, ...args)
-                        const dat = this.getLevelData("town-square")
-                        if (dat === null) {
-                            this.levelDataPromises.get("town-square").then(obj=>{
-                                this.levelDataCache.set("old-town-square", obj)
-                            })
-                        } else {
-                            this.levelDataCache.set("old-town-square", dat)
+                        if (!this.levelDataPromises.get("old-town-square")) {
+                            const dat = this.getLevelData("town-square")
+                            if (dat === null) {
+                                const ts = this.levelDataPromises.get("town-square")
+                                if (ts) {
+                                    ts.then(obj=>{
+                                        this.levelDataCache.set("old-town-square", obj)
+                                    })
+                                }
+                            } else {
+                                this.levelDataCache.set("old-town-square", dat)
+                            }
                         }
-                        for (const [nam, conts] of Object.entries(MANIF.sprites)) {
-                            try {
-                                this.textures.set(nam, await this.getOrLoadTexture(conts.path));
-                            } catch (t) {
-                                console.warn(`[MoreMorp] [deferred] Failed to load sprite "${nam}":`, t),
-                                this.textures.set(nam, this.createFallbackTexture("MM"+nam));
+                        if (init) {
+                            init = false
+                            for (const [nam, conts] of Object.entries(MANIF.sprites)) {
+                                try {
+                                    this.textures.set(nam, await this.getOrLoadTexture(conts.path));
+                                } catch (t) {
+                                    console.warn(`[MoreMorp] [deferred] Failed to load sprite "${nam}":`, t),
+                                    this.textures.set(nam, this.createFallbackTexture("MM"+nam));
+                                }
                             }
                         }
                     }
