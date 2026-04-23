@@ -9,5 +9,6 @@ const PATCH = {
   LEVELS: {
   prefix: "levels/", data: [
     "mminit.json",
+    "moletown.json",
 ]}}
 PATCH.IMGS.data.push('portal.webp')

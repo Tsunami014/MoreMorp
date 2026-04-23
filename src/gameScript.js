@@ -14,6 +14,7 @@ function check() {
   return true;
 }
 
+
 var current = null;
 export function getCurrentLvl() {
   if (!check()) return {};
@@ -23,13 +24,14 @@ export function getCurrentLvl() {
   }
   return [ld.get(current), current == "old-town-square"];
 }
+export function inMoreMorp() {
+  return localStorage.getItem("lastLevelId") == "town-square" && !getCurrentLvl()[1]
+}
 
 function networkMove() {
-  if (localStorage.getItem("lastLevelId") == "town-square" && !getCurrentLvl()[1]) {
-    return false
-  }
-  return true
+  return !inMoreMorp();
 }
+
 
 async function clearLevel() {
   main.npcs.forEach((e) => {
@@ -51,9 +53,10 @@ async function loadLevel(lvlId, spawn) {
 
   const [lvl, isTown] = getCurrentLvl()
   var goto = null
-  for (const spn in lvl.spawns) {
+  for (const spn of lvl.spawns) {
     if (spn.tag == spawn) {
       goto = spn
+      break
     }
   }
   if (goto === null) {
@@ -77,6 +80,7 @@ async function loadLevel(lvlId, spawn) {
 
   main.onAfterLevelTransition()
 }
+
 export async function teleport(to, spawn) {
   if (!check()) return;
   await main.assetManager.ensureEssential(to)
@@ -143,7 +147,7 @@ function checkApply(obj) {
   if (obj.action.type.startsWith("mm_")) {
     let spl = obj.action.type.split("_").slice(1)
     if (spl[0] == "enter") {
-      teleport("mminit", "default")
+      teleport("mminit", "")
     } else if (spl[0] == "exit") {
       teleport("town-square", "")
     } else if (spl[0] == "npc") {
@@ -153,4 +157,25 @@ function checkApply(obj) {
     }
     return "everythings_fine"
   }
+}
+
+
+function handleEZaction(type, params) {
+  //console.log(act)
+  if (type == "exit_level") {
+    teleport(params.targetLevelId, params.targetSpawnTag)
+  } else {
+    console.warn("[MoreMorp] Unknown exit zone action: "+type)
+  }
+}
+function wrapExitZone(handl) {
+  if (!handl) return handl
+  function out(ext) {
+    if (inMoreMorp()) {
+      ext.actions.forEach(a=>{ handleEZaction(a.type, a.params) })
+      return true
+    }
+    return handl(ext)
+  }
+  return out;
 }
