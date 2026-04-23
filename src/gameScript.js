@@ -1,4 +1,6 @@
 var main = null;
+var outsky = null;
+var insky = [0, 0, 0];
 function setMain(nmain) {
   main = nmain;
   console.log("[MoreMorp] Injected the GameCanvas!")
@@ -40,10 +42,14 @@ async function clearLevel() {
   main.activeZoneIds.clear()
 }
 async function loadLevel(lvlId, spawn) {
+  if (outsky === null) {
+    const bg = main.scene.background
+    outsky = [bg.r, bg.g, bg.b]
+  }
   await clearLevel()
   await main.loadLevel(lvlId, spawn)
 
-  const lvl = getCurrentLvl()[0]
+  const [lvl, isTown] = getCurrentLvl()
   var goto = null
   for (const spn in lvl.spawns) {
     if (spn.tag == spawn) {
@@ -55,7 +61,20 @@ async function loadLevel(lvlId, spawn) {
   }
   tele(goto)
 
-  main.inputEnabled = true
+  var indoor = lvl.levelType == "indoor"
+  main.cloudSprites.forEach(c=>{c.visible = !indoor})
+
+  const bg = main.scene.background
+  if (indoor) {
+    bg.r = insky[0]; bg.g = insky[1]; bg.b = insky[2];
+  } else {
+    bg.r = outsky[0]; bg.g = outsky[1]; bg.b = outsky[2];
+  }
+  if (isTown) {
+    // Move down to sync with server again
+    main.networkClient.sendMove(0, 0.5, 0, 0, 0, 0, 0, 0);
+  }
+
   main.onAfterLevelTransition()
 }
 export async function teleport(to, spawn) {
@@ -78,7 +97,7 @@ export async function teleport(to, spawn) {
   c.play(
     r, i,
     async () => {
-        l?.(!0), await loadLevel(lvlId, spawn);
+        l?.(!0), await loadLevel(lvlId, spawn), main.inputEnabled = true;
     },
     () => {
         l?.(!1);
