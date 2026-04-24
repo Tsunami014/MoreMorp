@@ -9,6 +9,8 @@ function patchData(data) {
         .replace(/(?<=this\.networkClient ?= ?)/, "setMain(this)||")
         // Add a new keybind
         .replace(/(?<={)\s*(?=if ?\(([^=]+)===? ?.KeyF)/, "if ($1 === 'KeyP') { printPos() }")
+        // Allow ctrl to sprint as well as shift
+        .replace(/(?<=([a-zA-Z0-9_.]+)\(.Shift([a-zA-Z]+).\))/, "||$1('Control$2')")
         // Wrap setting the exit zone handler
         .replace(/(?<=onExitZoneIntercept ?=) ?(.+?)(?=[,)};])/g, "wrapExitZone($1)")
         // Override sending movement to the network
