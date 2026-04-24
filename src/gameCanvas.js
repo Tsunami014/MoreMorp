@@ -7,6 +7,8 @@ function patchData(data) {
     return pref+dataPref+data
         // Pick up the main class when networkClient is created
         .replace(/(?<=this\.networkClient ?= ?)/, "setMain(this)||")
+        // Add a new keybind
+        .replace(/(?<={)\s*(?=if ?\(([^=]+)===? ?.KeyF)/, "if ($1 === 'KeyP') { printPos() }")
         // Wrap setting the exit zone handler
         .replace(/(?<=onExitZoneIntercept ?=) ?(.+?)(?=[,)};])/g, "wrapExitZone($1)")
         // Override sending movement to the network

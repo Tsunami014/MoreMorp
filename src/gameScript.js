@@ -15,6 +15,13 @@ function check() {
 }
 
 
+function printPos() {
+  if (!check()) return;
+  const playr = main.players.get(main.localPlayerId)
+  console.log("x:", playr.renderX, "z:", playr.renderZ)
+}
+
+
 var current = null;
 export function getCurrentLvl() {
   if (!check()) return {};
