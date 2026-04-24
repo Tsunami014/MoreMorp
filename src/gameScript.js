@@ -22,17 +22,18 @@ function printPos() {
 }
 
 
+const oldPref = "OLD-"
 var current = null;
 export function getCurrentLvl() {
   if (!check()) return {};
   var ld = main.assetManager.levelDataCache;
   if (current === null) {
-    return [ld.get("old-town-square"), true];
+    return [ld.get(oldPref+localStorage.getItem("lastLevelId")), true];
   }
-  return [ld.get(current), current == "old-town-square"];
+  return [ld.get(current), current.startsWith(oldPref)];
 }
 export function inMoreMorp() {
-  return localStorage.getItem("lastLevelId") == "town-square" && !getCurrentLvl()[1]
+  return !getCurrentLvl()[1]
 }
 
 function networkMove() {
@@ -92,12 +93,13 @@ async function loadLevel(lvlId, spawn) {
 
 export async function teleport(to, spawn) {
   if (!check()) return;
+  const lvlId = localStorage.getItem("lastLevelId")
+  if (to === "") { to = lvlId; }
   await main.assetManager.ensureEssential(to)
   console.log("[MoreMorp] Teleporting to", to, spawn)
-  if (to == "town-square") { to = "old-town-square"; }
+  if (main.assetManager.levelDataCache.get(oldPref+to)) { to = oldPref+to; }
   var ld = main.assetManager.levelDataCache;
-  ld.set("town-square", ld.get(to))
-  const lvlId = "town-square"
+  ld.set(lvlId, ld.get(to))
   current = to
 
   let player = main.players.get(main.localPlayerId);
@@ -158,7 +160,7 @@ function checkApply(obj) {
     if (spl[0] == "enter") {
       teleport("mminit", "")
     } else if (spl[0] == "exit") {
-      teleport("town-square", "")
+      teleport("", "")
     } else if (spl[0] == "npc") {
       runNpc(obj.action.data)
     } else {

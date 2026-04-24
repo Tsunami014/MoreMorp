@@ -1,15 +1,19 @@
 function modifyJSON(url, js) {
     //console.log(js)
-    if (url.includes("town-square")) {
-        js.objects.push({
-            id: portal,
-            action: { label: "Travel", type: "mm_enter" },
-            rotation: 0.4,
-            scale: 1.2,
-            type: portal,
-            x: 0,
-            z: 2,
-        })
+    for (const nam in PORTAL_LOCATIONS) {
+        if (url.includes(nam)) {
+            const pos = PORTAL_LOCATIONS[nam]
+            js.objects.push({
+                id: portal,
+                action: { label: "Travel", type: "mm_enter" },
+                rotation: pos[2]||0,
+                scale: 1.2,
+                type: portal,
+                x: pos[0],
+                z: pos[1],
+            })
+            break
+        }
     }
     if (js.npcs && js.npcs.length > 0 && 'id' in js.npcs[0]) {
         js.npcs.map(npc=>{
@@ -28,6 +32,7 @@ function modifyJSON(url, js) {
     }
 }
 
+const oldPref = "OLD-"
 inst = null
 function hook() {
     document.addEventListener("DOMContentLoaded", () => {
@@ -55,17 +60,19 @@ function hook() {
                     var init = true
                     proto._loadEssential = async function (...args) {
                         await oldload.call(this, ...args)
-                        if (!this.levelDataCache.get("old-town-square")) {
-                            const dat = this.getLevelData("town-square")
-                            if (dat === null) {
-                                const ts = this.levelDataPromises.get("town-square")
-                                if (ts) {
-                                    ts.then(obj=>{
-                                        this.levelDataCache.set("old-town-square", obj)
-                                    })
+                        for (const nam in PORTAL_LOCATIONS) {
+                            if (!this.levelDataCache.get(oldPref+nam)) {
+                                const dat = this.getLevelData(nam)
+                                if (dat === null) {
+                                    const ts = this.levelDataPromises.get(nam)
+                                    if (ts) {
+                                        ts.then(obj=>{
+                                            this.levelDataCache.set(oldPref+nam, obj)
+                                        })
+                                    }
+                                } else {
+                                    this.levelDataCache.set(oldPref+nam, dat)
                                 }
-                            } else {
-                                this.levelDataCache.set("old-town-square", dat)
                             }
                         }
                         if (init) {
