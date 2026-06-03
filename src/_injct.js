@@ -93,8 +93,10 @@ function hook() {
             }
             console.error("[MoreMorp] Unable to find an instanceable object in the module!")
         });
-        const style = document.createElement('style');
-        style.textContent = CSS;
-        document.head.appendChild(style)
+        if (CSS) {
+            const style = document.createElement('style');
+            style.textContent = CSS;
+            document.head.appendChild(style)
+        }
     })
 }
